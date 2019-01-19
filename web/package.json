@@ -1,7 +1,7 @@
 {
-  "name": "lessoeurstheiere_web",
+  "name": "tresorsdepyrene_web",
   "version": "1.0.0",
-  "description": "Site web en ligne les soeurs Théière",
+  "description": "Site web en ligne les Trésors de Pyrène",
   "main": "index.js",
   "scripts": {
     "babel": "babel --presets es2015 app.ts -o build/bundle.js",
