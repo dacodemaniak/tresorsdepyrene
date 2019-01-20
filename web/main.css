@@ -50,18 +50,18 @@
 * MIXIN : Alignement vertical
 **/
 #main-footer {
-  background: #343a40;
+  background: #ffffff;
   font-size: 0.7em;
   padding-top: 0.8em;
 }
 #main-footer nav h3 {
-  color: #ffffff;
+  color: #000000;
   font-size: 1em;
   font-weight: normal;
   text-transform: uppercase;
 }
 #main-footer nav ul.list-unstyled li {
-  color: #ffffff;
+  color: #000000;
   font-weight: normal;
 }
 #main-footer nav ul.list-unstyled li a {
@@ -83,10 +83,10 @@
   text-align: center;
 }
 #user-menu a:hover {
-  background-color: #f9dbbc;
+  background-color: #c1b3a8;
 }
 #main-nav.navbar.navbar-light.bg-light {
-  background-color: #ed912f !important;
+  background-color: #7a6656 !important;
 }
 #main-nav.navbar.navbar-light.bg-light ul li.nav-item {
   width: 15em;
@@ -96,6 +96,63 @@
 }
 #main-nav.navbar.navbar-light.bg-light ul li.nav-item a.nav-link {
   color: inherit;
+}
+#categories-slider div.carousel-caption {
+  color: #000000;
+  bottom: 50%;
+}
+#categories-slider div.carousel-caption h4 {
+  background-color: #ffffff;
+  color: inherit;
+  font-size: 2em;
+  letter-spacing: .5em;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+#categories-slider div.carousel-caption h4 span {
+  color: #7a6656;
+}
+#product-block {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  background-color: #7a6656;
+}
+#product-block article {
+  padding: 1em;
+}
+#product-block article header {
+  background-color: #ffffff;
+  color: #000000;
+}
+#product-block article header h3 {
+  color: inherit;
+  text-transform: uppercase;
+  text-align: center;
+}
+#product-block article figure {
+  height: 25em;
+  width: 12.5em;
+}
+#product-block article footer {
+  background-color: #ffffff;
+  color: #000000;
+}
+#product-block article footer a {
+  color: inherit;
+  text-decoration: none;
+}
+#informations div {
+  border-right: solid 1px #7a6656;
+}
+#informations div:last-child {
+  border-right: none;
+}
+#informations div article.tip {
+  padding: 6em;
+  text-align: center;
+}
+#informations div article.tip p {
+  margin-top: 1.5em;
 }
 #promotions .promotion {
   padding-top: 0.5em;
@@ -117,38 +174,58 @@
   transition: color 0.3s ease;
 }
 #promotions .promotion figure:hover figcaption {
-  color: #ed912f;
+  color: #7a6656;
 }
-article#editorial.with-padding {
-  color: #ffffff;
+#editorial-block {
+  background-color: #7a6656;
+}
+#editorial-block article#editorial.with-padding {
+  color: #000000;
 }
 @media screen and (min-width: 768px) {
-  article#editorial.with-padding {
-    padding: 10em;
+  #editorial-block article#editorial.with-padding {
+    padding: 5em;
     text-align: justify;
   }
 }
-article#editorial.with-padding blockquote {
-  background-color: #ed912f;
+#editorial-block article#editorial.with-padding blockquote {
+  background-color: #d6cdc6;
   font-size: 1em;
   padding: 3em;
+  margin: 0;
   text-align: justify;
 }
+#editorial-block article#editorial.with-padding .flower {
+  height: 5em;
+  position: relative;
+}
+#editorial-block article#editorial.with-padding .flower.right {
+  background-image: url("images/feuille2.svg");
+  background-repeat: no-repeat;
+  background-position: 100%;
+  bottom: 3em;
+}
+#editorial-block article#editorial.with-padding .flower.left {
+  background-image: url("images/feuille1.svg");
+  background-repeat: no-repeat;
+  background-position: 0%;
+  top: 3em;
+}
 @media screen and (min-width: 768px) {
-  article#editorial header {
+  #editorial-block article#editorial header {
     padding-left: 60%;
   }
 }
-article#editorial header h1 {
+#editorial-block article#editorial header h1 {
   font-family: "Great Vibes";
   font-size: 3.5em;
-  color: #ed912f;
+  color: #7a6656;
 }
-article#editorial header h2 {
+#editorial-block article#editorial header h2 {
   color: #000000;
 }
 article#box-discovering {
-  background-color: #ed912f;
+  background-color: #7a6656;
   padding: 3em;
 }
 article#box-discovering header h3 {
@@ -175,7 +252,7 @@ article#month-product {
   padding: 3em;
 }
 article#month-product header h3 {
-  color: #ed912f;
+  color: #7a6656;
   font-size: 2.1em;
   text-align: center;
   text-transform: none;
@@ -520,7 +597,7 @@ form.material-like .form-group .bar::before {
   text-decoration: underline;
 }
 section.category-products header {
-  background-color: #ed912f;
+  background-color: #7a6656;
 }
 section.category-products header h1 {
   padding-left: 1em;
@@ -538,13 +615,13 @@ section.category-products header.child h2 {
   padding-top: 1em;
   padding-bottom: 1em;
   font-size: 1em;
-  color: #ed912f;
+  color: #7a6656;
   letter-spacing: .1em;
 }
 section.category-products header.child h2.see-all {
   width: 30%;
   margin-left: 70%;
-  border-color: #ed912f;
+  border-color: #7a6656;
   border-bottom: solid 1px;
   border-left: solid 1px;
 }
@@ -552,7 +629,7 @@ section.category-products header.child h2.see-all a {
   color: inherit;
 }
 section.category-products article.card header.card-header {
-  background-color: #ed912f;
+  background-color: #7a6656;
   height: 5em;
 }
 section.category-products article.card header.card-header h2.card-title,
@@ -580,7 +657,7 @@ section.category-products article.card div.min-price p.badge {
   padding: 0.3em;
 }
 section.category-products article form.form-cart {
-  background-color: #f9dbbc;
+  background-color: #c1b3a8;
   padding: 0.5em;
   margin-top: 1em;
 }
@@ -589,7 +666,7 @@ section.product-container aside#decor-produit {
   padding: 1em;
   font-size: .7em;
   font-weight: bold;
-  background-color: #f9dbbc;
+  background-color: #c1b3a8;
 }
 section.product-container #product-slider ol.carousel-indicators li {
   background-color: #868e96;
@@ -623,7 +700,7 @@ section.product-container #product-slider a span.carousel-control-next-icon {
   position: absolute;
   top: 0;
   width: 100%;
-  background-color: #f5c38d;
+  background-color: #ac998a;
   color: #ffffff;
 }
 #dialog.hidden {
@@ -635,11 +712,11 @@ section.product-container #product-slider a span.carousel-control-next-icon {
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(237, 145, 47, 0.5);
+  background-color: rgba(122, 102, 86, 0.5);
   z-index: 999;
 }
 #dialog div.dialog.inner {
-  background-color: #ed912f;
+  background-color: #7a6656;
   color: #ffffff;
   position: relative;
   height: 300px;

@@ -20,14 +20,13 @@ class DefaultController extends Controller
 	    
 	    $editorial = $this->getEditorial();
 	    
-	    $discovering = $this->getDiscovering();
-	    
 	    // Promotions en cours...
-	    $promotion = $this->getBySlug("promotions");
+	    $promotions = $this->getBySlug("promotions");
 	    $products = [];
+	    $promotion = [];
 	    
-	    if ($promotion) {
-	        $catToArticles = $promotion->getArticles();
+	    if ($promotions) {
+	        $catToArticles = $promotions->getArticles();
 	        foreach($catToArticles as $catToArticle) {
 	            $products[] = [
 	                "category" => $catToArticle->getCategorie(),
@@ -35,58 +34,61 @@ class DefaultController extends Controller
 	                "image" => $catToArticle->getArticle()->getMainImage()
 	            ];
 	        }
+	        if (count($products)) {
+	            $promotion = $products[0];
+	        }
 	    }
 	    
-	    // Produit du mois
-	    $monthProductCategory = $this->getBySlug("monthly-product");
-	    $monthProduct = [];
-	    if ($monthProductCategory) {
-	        $categoryContent = $monthProductCategory->getContent();
-	        $monthProduct["category"] = $monthProductCategory;
-	        $catToArticles = $monthProductCategory->getArticles();
-	        $catToArticle = $catToArticles[0];
-	        $product = [
-	           "product" => $catToArticle->getArticle(),
-	            "image" => $catToArticle->getArticle()->getMainImage()
-	        ];
-	        $monthProduct["product"] = $product;
+	    // Nouveautés
+	    $newProductsCategory = $this->getBySlug("news");
+	    $newProduct = [];
+	    if ($newProductsCategory) {
+	        $categoryContent = $newProductsCategory->getContent();
+	        
+	        $catToArticles = $newProductsCategory->getArticles();
+	        if (count($catToArticles)) {
+    	        $catToArticle = $catToArticles[0];
+    	        $product = [
+    	           "product" => $catToArticle->getArticle(),
+    	            "image" => $catToArticle->getArticle()->getMainImage()
+    	        ];
+    	        $newProduct["category"] = $newProductsCategory;
+    	        $newProduct["product"] = $product;
+	        }
 	    }
 	    
 	    
-	    // Produit Coup de coeur
-	    $heartProductCategory = $this->getBySlug("heart");
-	    $heartProduct = [];
-	    if ($heartProductCategory) {
-	        $heartProduct["category"] = $heartProductCategory;
-	        $catToArticles = $heartProductCategory->getArticles();
-	        $catToArticle = $catToArticles[0];
-	        $product = [
-	            "product" => $catToArticle->getArticle(),
-	            "image" => $catToArticle->getArticle()->getMainImage()
-	        ];
-	        $heartProduct["product"] = $product;
-	    }
-	    
-	    // Réunions à domicile
-	    $homeMeetingCategory = $this->getBySlug("home-meeting");
-	    $homeMeeting = [];
-	    if ($homeMeetingCategory) {
-	        $homeMeeting["category"] = $homeMeetingCategory;
-	        $homeMeeting["content"] = $homeMeetingCategory->getContent();
-	    }
+	    // Meilleures ventes
+        $topSales = $this->_topSales();
+        $bestSale = [];
+        if (count($topSales)) {
+            $bestSale = $topSales[0];
+        }
 	    
 	    // Images de slider
 	    $sliderImages = $this->getSliderImages($assetPackage);
+	    
+	    // Tips : newsletter, livraison, paiement
+	    $tipsCategory = $this->getBySlug("tips");
+	    $tipArticles = [];
+	    if ($tipsCategory) {
+	        $catToArticles = $tipsCategory->getArticles();
+	        
+	        if (count($catToArticles)) {
+	            foreach ($catToArticles as $catToArticle) {
+	                $tipArticles[] = $catToArticle->getArticle();
+	            }
+	        }
+	    }
 	    
 		return $this->render("@App/Default/index.html.twig",
 		  [
 		      "sliderImages" => $sliderImages,
 		      "editorial" => $editorial,
-		      "discovering" => $discovering,
-		      "promotions" => $products,
-		      "monthProduct" => $monthProduct,
-		      "heartProduct" => $heartProduct,
-		      "homeMeeting" => $homeMeeting
+		      "promotions" => $promotion,
+		      "newProduct" => $newProduct,
+		      "bestSale" => $bestSale,
+		      "tips" => $tipArticles
 		  ]
 		);
 	}
@@ -103,7 +105,7 @@ class DefaultController extends Controller
 	       ->findOneBySlug("editorial");
 	   
 	   if ($editorial) {
-	       $content = $editorial->getContent();        
+	       $content = $editorial;        
 	   }
 	   
 	   return $content;
@@ -163,6 +165,7 @@ class DefaultController extends Controller
 	                   $sliderImages[] = [
 	                       "image" => $assetPackage->getUrl("images/" . $content->slide),
 	                       "alt" => $content->title->fr,
+	                       "caption" => $content->caption->fr,
 	                       "active" => $indice === 0 ? true : false,
 	                       "order" => $indice
 	                   ];
@@ -172,6 +175,44 @@ class DefaultController extends Controller
 	       }
 	       
 	       return $sliderImages;
+	}
+	
+	private function _topSales() {
+	    $repository = $this->getDoctrine()
+	    ->getManager()
+	    ->getRepository(\MenuBundle\Entity\Categorie::class);
+	    
+	    $topSales = $this->getTopSelling($repository->getTopSelling());
+	    
+        return $topSales;
+	}
+	
+	/**
+	 * Retourne le top 10 des ventes
+	 * @param $articles
+	 * @return array
+	 */
+	private function getTopSelling(array $articles): array {
+	    $soldedArticles = [];
+	    
+	    foreach ($articles as $article) {
+	        $content = $article->getContent();
+	        
+	        if (property_exists($content, "sold")) {
+	            $soldedArticles[] = [
+	                "product" => $article->getRawContent(),
+	                "soldQuantity" => $content->sold
+	            ];
+	        }
+	    }
+	    
+	    // Tri le résultat dans l'odre des quantités vendues
+	    uasort($soldedArticles, function($first, $second) {
+	        return $first["soldQuantity"] <=> $second["soldQuantity"];
+	    });
+	        
+	    // Récupère les 10 dernières meilleures ventes
+	    return array_slice($soldedArticles, 0, 9, true);
 	}
     
 }

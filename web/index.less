@@ -1,5 +1,81 @@
 // main: ./main.less
 
+#categories-slider {
+    div {
+        &.carousel-caption {
+            color: @default_font_color;
+            bottom: 50%;
+            h4 {
+                background-color: lighten(@default_menu_color, .5);
+                color: inherit;
+                font-size: 2em;
+                letter-spacing: .5em;
+                text-transform: uppercase;
+                font-weight: bold;
+
+                span {
+                    color: @default_hover_color;
+                }
+            }
+        }
+    }
+}
+
+#product-block {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    background-color: @default_hover_color;
+
+    article {
+        padding: 1em;
+        header {
+            background-color: @default_menu_color;
+            color: @default_font_color;
+
+            h3 {
+                color: inherit;
+                text-transform: uppercase;
+                text-align: center;
+            }
+        }
+
+        figure {
+            height: 25em;
+            width: 12.5em;
+        }
+
+        footer {
+            background-color: @default_menu_color;
+            color: @default_font_color;
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+#informations {
+    div {
+        border-right: solid 1px @default_hover_color;
+        &:last-child {
+            border-right: none;
+        }
+        article {
+            &.tip {
+                padding: 6em;
+                text-align: center;
+                
+                p {
+                    margin-top: 1.5em;
+                    
+                }
+
+            }
+        }
+    }
+}
 #promotions {
     .promotion {
         padding-top: 0.5em;
@@ -29,36 +105,65 @@
     }
 }
 
-article {
-    &#editorial {
-        &.with-padding {
-            @media screen and (min-width: 768px) {
-                padding: 10em;
-                text-align: justify;           
-            }
-            color: @default_menu_color; 
-            blockquote {
-                background-color: @default_hover_color;
-                font-size: 1em;
-                padding: 3em;
-                text-align: justify;
-            }
-        }
-        header {
-            @media screen and (min-width: 768px) {
-                padding-left: 60%;
-            }
+#editorial-block {
+    background-color: @default_hover_color;
+
+    article {
+        &#editorial {
             
-            h1 {
-                font-family: "Great Vibes";
-                font-size: 3.5em;
-                color: @default_hover_color;
+            &.with-padding {
+                @media screen and (min-width: 768px) {
+                    padding: 5em;
+                    text-align: justify;           
+                }
+                color: @default_font_color; 
+                blockquote {
+                    background-color: lighten(@default_hover_color, 40%);
+                    font-size: 1em;
+                    padding: 3em;
+                    margin: 0;
+                    text-align: justify;
+
+                }
+
+
+                .flower {
+                    height: 5em;
+                    //background-color: lighten(@default_hover_color, 40%);
+                    position: relative;
+                    &.right {
+                        background-image: url("./images/feuille2.svg");
+                        background-repeat: no-repeat;
+                        background-position: 100%;
+                        bottom: 3em;
+                    }
+                    &.left {
+                        background-image: url("./images/feuille1.svg");
+                        background-repeat: no-repeat;
+                        background-position: 0%;
+                        top: 3em;                      
+                    }
+                }
             }
-            h2 {
-                color: @default_font_color;
+            header {
+                @media screen and (min-width: 768px) {
+                    padding-left: 60%;
+                }
+                
+                h1 {
+                    font-family: "Great Vibes";
+                    font-size: 3.5em;
+                    color: @default_hover_color;
+                }
+                h2 {
+                    color: @default_font_color;
+                }
             }
-        }
+        }        
     }
+}
+article {
+
 
     &#box-discovering {
         background-color: @default_hover_color;

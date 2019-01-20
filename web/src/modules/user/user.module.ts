@@ -46,7 +46,7 @@ export class UserModule {
                     const menus: Array<any> = response.menus;
                     
                     const accountMenu = menus.filter(
-                        (element) => { return element.region === '_top-left'}
+                        (element) => { return element.region === '_top'}
                     );
                     const userMenu = new UserMenuModel();
                     userMenu.deserialize(accountMenu[0]);

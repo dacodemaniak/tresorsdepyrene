@@ -9,9 +9,9 @@ export class Constants {
     public static hostname: string = window.location.hostname;
 
     public static get apiRoot() {
-        if (Constants.hostname === 'api.lessoeurstheiere.com' || Constants.hostname === 'lessoeurstheiere.com' || Constants.hostname === 'www.lessoeurstheiere.com') {
-            return 'https://api.lessoeurstheiere.com/';
+        if (Constants.hostname === 'api.tresorsdepyrene.com' || Constants.hostname === 'tresorsdepyrene.com' || Constants.hostname === 'www.tresorsdepyrene.com') {
+            return 'https://api.tresorsdepyrene.com/';
         }
-        return 'http://api.lessoeurstheiere.wrk/app_dev.php/';
+        return 'http://api.tresorsdepyrene.wrk/';
     }
 }

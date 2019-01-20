@@ -1,6 +1,6 @@
 {%  extends "base.html.twig" %}
 
-{%  block title %}Thés Naturels{%  endblock %}
+{%  block title %}Les Trésors de Pyrène{%  endblock %}
 
 {% block slider %}
 	<div class="carousel slide d-none d-sm-block d-md-block" data-ride="carousel" id="categories-slider">
@@ -14,7 +14,10 @@
 		<div class="carousel-inner">
     		{% for slide in sliderImages %}
     				<div class="carousel-item{% if slide.active %} active{% endif %}">
-    					<img class="d-block w-100" src="{{ slide.image }}" alt="{{ slide.alt }}">
+    					<img class="d-block w-100" src="{{ asset(slide.image) }}" alt="{{ slide.alt }}">
+    					<div class="carousel-caption d-none d-md-block">
+    						<h4>{{ slide.caption|raw }}</h4>
+    					</div>
     				</div>
     
     		{% endfor %}
@@ -34,126 +37,106 @@
 {% endblock %}
 
 {%  block body %}
-	{% block edito %}
-		<div class="row">
-			<article class="col with-padding" id="editorial">
-				<header class="row">
-    					<figure class="col-xl-2">
-    						<img src="{{ asset("images/illustration.png") }}" alt="Les Soeurs Théière">
-    					</figure>
-    					
-    					<div class="col-xl-10">
-    						<h1 class="pl-5">{{ editorial.title }}</h1>
-    						<h2 class="pl-5 col-xl-12">{{ editorial.subtitle }}</h2>    					
-    					</div>
-
-				</header>
-				
-				<blockquote>
-					{{ editorial.content|raw }}
-				</blockquote>
-			</article>
-		</div>
-	{% endblock %}
-	
-	{% block promotions %}
-		{% if promotions %}
-    			<div class="row" id="promotions">
-            		{%  for promotion in promotions %}
-            			<div class="col-xl-2 col-lg-2 col-md-2 col-sm-12 col-xs-12 promotion">
-                			<figure class="card">
-                				<a href="{{ path("product", {'slug': promotion.product.getId(), 'category': promotion.category.getId()}) }}" title="Voir {{ promotion.product.getTitleFr() }}">
-                					<img src="{{ promotion.image.src }}" alt="{{ promotion.image.alt }}" class="d-block w-100 img-responsive">
-                				</a>
-                				<figcaption>
-                					{{ promotion.product.getTitleFr() }}
-                				</figcaption>
-                			</figure>
-                		</div>
-            		{% endfor %}
-        		</div>
-		{% endif %}
-	{% endblock %}
-	
 	{% block box %}
+	<!--  Promotions / Meilleures Ventes / Nouveautés -->
+	<div class="container-fluid" id="product-block">
 		<div class="row">
-			<article id="box-discovering" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<header>
-					<h3>{{ discovering.title.fr|raw }}</h3>
-				</header>
-				<blockquote>
-					{{ discovering.content.fr|raw }}
-				</blockquote>
-				<div class="text-center">
-    				<a href="#" class="btn btn-light" role="button" title="">
-    					{{ discovering.btn.fr }}
-    				</a>
-				</div>
-				
-			</article>
-			
-			<article id="month-product" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<header>
-					<h3>{{ monthProduct.category.getTitleFr()|raw }}</h3>
-				</header>
-				
-				<figure class="mx-auto">
-					<a href="{{ path("product", {'slug': monthProduct.product.product.getId(), 'category': monthProduct.category.getId()}) }}" title="Découvrez {{ monthProduct.category.getTitleFr() }}">
-						<img src="{{ monthProduct.product.image.src }}" alt="{{ monthProduct.product.image.alt }}" class="mx-auto d-block w-50 img-responsive">
-					</a>
-					<figcaption aria-hidden="true">
-						{{ monthProduct.product.product.getTitleFr()|raw }}
-					</figcaption>
-				</figure>
-				
-				<div class="text-center">
-					<a href="{{ path("product", {'slug': monthProduct.product.product.getId(), 'category': monthProduct.category.getId()}) }}" class="btn btn-outline-light" role="button" title="{{ monthProduct.product.product.getTitleFr() }}">
-					    {{ monthProduct.category.getBtnFr()|raw }}
-					</a>
-				</div>			
-			</article>
-		</div>
-	{% endblock %}
-	
-	{% block heart %}
-		<div id="heart-home" class="row">
-			<article id="heart-product" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<header>
-					<h3>{{ heartProduct.category.getTitleFr()|raw }}</h3>
-				</header>
-				
-				<figure class="text-center">
-					<a href="{{ path("product", {'slug': heartProduct.product.product.getId(), 'category': heartProduct.category.getId()}) }}" alt="Vous allez aimer {{ heartProduct.product.product.getTitleFr() }}">
-						<img src="{{ heartProduct.product.image.src }}" alt="{{ heartProduct.product.image.alt }}" class="mx-auto d-block w-50 img-responsive" class="img-responsive">
-					</a>
-					<figcaption aria-hidden="true">
-						{{ heartProduct.product.product.getTitleFr()|raw }}
-					</figcaption>
-					
-				</figure>
-				
-				<a aria-hidden="true" href="{{ path("product", {'slug': heartProduct.product.product.getId(), 'category': heartProduct.category.getId()}) }}" class="btn btn-light" role="button" title="{{ heartProduct.product.product.getTitleFr() }}">
-					{{ heartProduct.category.getBtnFr()|raw }}
-				</a>			
-			</article>
-			
-			<article id="home-meeting" class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<div class="wrapper">
+    		{% if newProduct|length %}
+        			<article id="nouveautes" class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+        				<header>
+        					<h3>{{ newProduct.category.getTitleFr()|raw }}</h3>
+        				</header>
+        				
+        				<figure class="mx-auto">
+        					<a href="{{ path("product", {'slug': newProduct.product.product.getId(), 'category': newProduct.category.getId()}) }}" title="Découvrez {{ newProduct.category.getTitleFr() }}">
+        						<img src="{{ newProduct.product.image.src }}" alt="{{ newProduct.product.image.alt }}" class="mx-auto d-block w-50 img-responsive">
+        					</a>
+        				</figure>
+        				
+        				<footer class="text-center">
+        					<a href="{{ path("product", {'slug': newProduct.product.product.getId(), 'category': newProduct.category.getId()}) }}" class="" title="En savoir plus sur {{ newProduct.product.product.getTitleFr() }}">
+        					    en savoir plus
+        					</a>
+        				</footer>			
+        			</article>
+    		{% endif %}
+    		
+    		{% if bestSale|length %}
+    			<article id="best-selling" class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
     				<header>
-    					<h3>{{ homeMeeting.content.title.fr|raw }}</h3>
+    					<h3>{{ bestSale.category.getTitleFr()|raw }}</h3>
     				</header>
     				
-    				<blockquote>
-    					{{ homeMeeting.content.content.fr|raw }}
-    				</blockquote>
+    				<figure class="mx-auto">
+    					<a href="{{ path("product", {'slug': bestSale.product.product.getId(), 'category': bestSale.category.getId()}) }}" title="Découvrez {{ bestSale.category.getTitleFr() }}">
+    						<img src="{{ bestSale.product.image.src }}" alt="{{ bestSale.product.image.alt }}" class="mx-auto d-block w-50 img-responsive">
+    					</a>
+    				</figure>
     				
-    				<a class="btn btn-light" role="button" href="{{ path("contact") }}" title="{{ homeMeeting.content.title.fr }}">
-    					{{ homeMeeting.content.btn.fr|raw }}
-    				</a>
-    			</div>
-			</article>
-		</div>
+    				<footer class="text-center">
+    					<a href="{{ path("product", {'slug': bestSale.product.product.getId(), 'category': bestSale.category.getId()}) }}" class="" title="En savoir plus sur {{ bestSale.product.product.getTitleFr() }}">
+    					    en savoir plus
+    					</a>
+    				</footer>			
+    			</article>
+    		{% endif %}
+    		
+    		{% if promotions|length %}
+        			<article id="promotions" class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+        				<header>
+        					<h3>{{ promotions.category.getTitleFr()|raw }}</h3>
+        				</header>
+        				
+        				<figure class="mx-auto">
+        					<a href="{{ path("product", {'slug': promotions.product.getId(), 'category': promotions.category.getId()}) }}" title="Découvrez {{ promotions.category.getTitleFr() }}">
+        						<img src="{{ promotions.product.image }}" alt="{{ promotions.product.alt }}" class="mx-auto d-block w-50 img-responsive">
+        					</a>
+        				</figure>
+        				
+        				<footer class="text-center">
+        					<a href="{{ path("product", {'slug': promotions.product.getId(), 'category': promotions.category.getId()}) }}" class="" title="En savoir plus sur {{ promotions.product.getTitleFr() }}">
+        					    en savoir plus
+        					</a>
+        				</footer>			
+        			</article>
+        	{% endif %}
+        </div>
+	</div>
+	{% endblock %}	
+
+	
+	{% block info %}
+		<section id="informations" class="row">
+			{% if tips|length %}
+				{% for tip in tips %}
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+						<article class="tip" id="{{ tip.slug }}">
+							<img src="/images/{{ tip.getLogo() }}" class="img-responsive">
+							<p class="content">
+								{{ tip.getTitleFr()|raw }}
+							</p>
+						</article>
+					</div>
+				{% endfor %}
+			{% endif %}
+		</section>
 	{% endblock %}
+	
+	{% if editorial is not null %}
+    	{% block edito %}
+    		<div class="container-fluid" id="editorial-block">
+    			<div class="row">
+        			<article class="col with-padding" id="editorial">
+        				<div class="flower left"></div>
+        				<blockquote>
+        					{{ editorial.getContentFr()|raw }}
+        				</blockquote>
+        				<div class="flower right"></div>
+        			</article>
+        		</div>
+    		</div>
+    	{% endblock %}
+    {% endif %}
 {%  endblock %}
 
 {% block footer %}
