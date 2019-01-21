@@ -8,7 +8,7 @@
 @import url("https://fonts.googleapis.com/css?family=Great+Vibes");
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 #main-header {
-  height: 10em;
+  height: 16em;
 }
 #main-header #user-menu .wrapper {
   height: inherit;
@@ -50,19 +50,21 @@
 * MIXIN : Alignement vertical
 **/
 #main-footer {
+  margin-top: 1em;
   background: #ffffff;
   font-size: 0.7em;
   padding-top: 0.8em;
 }
 #main-footer nav h3 {
   color: #000000;
-  font-size: 1em;
-  font-weight: normal;
+  font-size: 1.3em;
+  font-weight: bold;
   text-transform: uppercase;
 }
 #main-footer nav ul.list-unstyled li {
   color: #000000;
   font-weight: normal;
+  font-size: 1.2em;
 }
 #main-footer nav ul.list-unstyled li a {
   color: inherit;
