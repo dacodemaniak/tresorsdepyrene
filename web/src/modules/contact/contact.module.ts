@@ -1,3 +1,4 @@
+import { UserService } from './../../services/user.service';
 import { Constants } from './../../shared/constants';
 import { EmailHelper } from './../../helpers/email.helper';
 import { ToastModule } from '../toast/toast.module';
@@ -21,6 +22,14 @@ export class ContactModule {
     public constructor() {
         this.apiRoot = Constants.apiRoot;
         this._setListeners();
+
+        const userService: UserService = new UserService();
+        userService.hasUser().then((has: boolean) => {
+            if (has) {
+                this.nameField.val(userService.getUser().getName());
+                this.emailField.val(userService.getUser().getEmail());
+            }
+        })
     }
 
     private _setListeners(): void {

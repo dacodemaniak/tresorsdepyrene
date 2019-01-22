@@ -41,6 +41,10 @@ export class UserModel {
         return this.content;
     }
 
+    public getEmail(): string {
+        return this.login;
+    }
+    
     public hasAddresses(): boolean {
         return this.addresses ? true : false;
     }
