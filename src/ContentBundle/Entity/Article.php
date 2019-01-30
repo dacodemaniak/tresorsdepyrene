@@ -347,10 +347,12 @@ class Article
         
         if ($image) {
             if (property_exists($image, "src")) {
-                return [
-                    "src" => $imagePath . $image->src,
-                    "alt" => $image->alt->fr
-                ];
+                if (file_exists($imagePath . $image->src)){
+                    return [
+                        "src" => $imagePath . $image->src,
+                        "alt" => $image->alt->fr
+                    ];
+                }
             }
         }
         
